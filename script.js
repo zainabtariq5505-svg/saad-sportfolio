@@ -111,6 +111,11 @@ class ScrollAnimations {
     }
 
     init() {
+        this.addAnimationAttributes();
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('[data-animate]').forEach(el => el.classList.add('animated'));
+            return;
+        }
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -125,8 +130,6 @@ class ScrollAnimations {
             observer.observe(el);
         });
 
-        // Add data-animate to elements that should animate
-        this.addAnimationAttributes();
     }
 
     addAnimationAttributes() {
@@ -481,28 +484,28 @@ class ContactForm {
             return;
         }
 
-        // Simulate submission (integrate with your backend/Supabase)
-        this.showMessage('Processing...', 'success');
-
-        // Simulate API call
-        await this.submitToBackend(formData);
-
-        // Success
-        this.showMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
-        this.form.reset();
+        const button = this.form.querySelector('button[type="submit"]');
+        if (button.disabled) return;
+        button.disabled = true;
+        this.showMessage('Sending...', 'success');
+        try {
+            await this.submitToBackend(formData);
+            this.showMessage('Message delivered. Thanks for reaching out!', 'success');
+            this.form.reset();
+        } catch (error) {
+            this.showMessage('Could not send your message. Please try again later.', 'error');
+        } finally {
+            button.disabled = false;
+        }
     }
 
     async submitToBackend(formData) {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // TODO: Integrate with Supabase or your backend
-        console.log('Form submitted:', formData);
-
-        // You can use Supabase here:
-        // const { data, error } = await supabase
-        //     .from('contact_messages')
-        //     .insert([formData]);
+        const { error } = await supabase.rpc('submit_contact', {
+            p_name: formData.name,
+            p_email: formData.email,
+            p_message: formData.message
+        });
+        if (error) throw error;
     }
 
     showMessage(text, type) {

@@ -50,6 +50,7 @@
                 <span>Analytics</span>
             </a>
 
+            <a href="#" class="nav-item" data-section="messages"><span>Messages</span></a>
             <a href="#" class="nav-item" data-section="settings">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="3"/>
@@ -209,6 +210,7 @@
             </div>
         </div>
 
+        <div class="dashboard-section" id="messages-section"><div class="glass-card"><h3 class="card-title">Contact inbox</h3><p class="card-description">Messages sent through your portfolio. Only admins can read these.</p><div id="contact-inbox" aria-live="polite">Loading messages...</div></div></div>
         <!-- Settings Section -->
         <div class="dashboard-section" id="settings-section">
             <div class="glass-card">
@@ -256,6 +258,6 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js?v=20261012-auth"></script>
-    <script src="dashboard.js?v=20261012-auth"></script>
+    <script src="dashboard.js?v=20261012-contact"></script>
 </body>
 </html>

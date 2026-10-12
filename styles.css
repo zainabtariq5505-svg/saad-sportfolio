@@ -1435,7 +1435,7 @@ body.video-mode .gradient-bg {
 
 /* Scroll Animations */
 [data-animate] {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(30px);
     transition: all 0.8s ease-out;
 }

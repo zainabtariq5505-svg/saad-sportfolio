@@ -18,6 +18,7 @@ navItems.forEach(item => {
         e.preventDefault();
 
         const section = item.dataset.section;
+        if (section === 'messages') loadContactInbox();
 
         // Update active nav
         navItems.forEach(nav => nav.classList.remove('active'));
@@ -32,7 +33,8 @@ navItems.forEach(item => {
             overview: 'Overview',
             visitors: 'All Visitors',
             analytics: 'Analytics',
-            settings: 'Settings'
+            settings: 'Settings',
+            messages: 'Contact inbox'
         };
         sectionTitle.textContent = titles[section] || 'Dashboard';
     });
@@ -418,3 +420,27 @@ window.addEventListener('resize', () => {
         sidebar?.classList.remove('active');
     }
 });
+
+async function loadContactInbox() {
+    const inbox = document.getElementById('contact-inbox');
+    if (!inbox) return;
+    inbox.textContent = 'Loading messages...';
+    const { data, error } = await supabase.from('contact_messages').select('name,email,message,created_at').order('created_at', { ascending: false }).limit(100);
+    if (error) { inbox.textContent = 'Inbox unavailable. Database setup may still be required.'; return; }
+    inbox.replaceChildren();
+    if (!data.length) { inbox.textContent = 'No messages yet.'; return; }
+    for (const message of data) {
+        const card = document.createElement('article');
+        card.className = 'glass-card';
+        const title = document.createElement('h4');
+        title.textContent = message.name;
+        const sender = document.createElement('p');
+        sender.textContent = message.email + ' · ' + new Date(message.created_at).toLocaleString();
+        const body = document.createElement('p');
+        body.style.whiteSpace = 'pre-wrap';
+        body.style.overflowWrap = 'anywhere';
+        body.textContent = message.message;
+        card.append(title, sender, body);
+        inbox.append(card);
+    }
+}
