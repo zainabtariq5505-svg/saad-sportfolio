@@ -466,9 +466,9 @@ class ContactForm {
         e.preventDefault();
 
         const formData = {
-            name: this.form.name.value,
-            email: this.form.email.value,
-            message: this.form.message.value
+            name: this.form.elements.namedItem('name').value.trim(),
+            email: this.form.elements.namedItem('email').value.trim(),
+            message: this.form.elements.namedItem('message').value.trim()
         };
 
         // Basic validation
