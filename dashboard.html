@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body class="dashboard-body">
+    <!-- Authentication is verified after Supabase loads in dashboard.js. -->
+
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <span class="logo-text">SMS</span>
+                <span class="logo-dot"></span>
+            </div>
+            <p class="sidebar-subtitle">Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="overview">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <span>Overview</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="visitors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <span>Visitors</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="analytics">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3v18h18"/>
+                    <path d="m19 9-5 5-4-4-3 3"/>
+                </svg>
+                <span>Analytics</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.25M15.54 15.54l4.24 4.25M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logout-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                </svg>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title" id="section-title">Overview</h1>
+                <p class="dashboard-subtitle">Welcome back, Administrator</p>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Overview Section -->
+        <div class="dashboard-section active" id="overview-section">
+            <div class="stats-grid">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Total Visitors</p>
+                        <p class="stat-value" id="total-visitors">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Today</p>
+                        <p class="stat-value" id="today-visitors">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4M12 8h.01"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Active Now</p>
+                        <p class="stat-value" id="active-visitors">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <p class="stat-label">Top Country</p>
+                        <p class="stat-value" id="top-country">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="glass-card">
+                    <h3 class="card-title">Recent Visitors</h3>
+                    <div class="visitors-list" id="recent-visitors">
+                        <div class="loading-state">Loading visitors...</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 class="card-title">Top Countries</h3>
+                    <div class="countries-list" id="top-countries">
+                        <div class="loading-state">Loading countries...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visitors Section -->
+        <div class="dashboard-section" id="visitors-section">
+            <div class="glass-card">
+                <h3 class="card-title">All Visitors</h3>
+                <div class="table-container">
+                    <table class="visitors-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th>Browser</th>
+                                <th>IP</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-visitors-table">
+                            <tr>
+                                <td colspan="4" class="loading-state">Loading visitors...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="dashboard-section" id="analytics-section">
+            <div class="glass-card">
+                <h3 class="card-title">Visitor Analytics</h3>
+                <p class="card-description">Detailed analytics and insights about your visitors</p>
+
+                <div class="analytics-grid">
+                    <div class="analytics-item">
+                        <p class="analytics-label">Unique Visitors</p>
+                        <p class="analytics-value" id="unique-visitors">-</p>
+                    </div>
+                    <div class="analytics-item">
+                        <p class="analytics-label">Returning Visitors</p>
+                        <p class="analytics-value" id="returning-visitors">-</p>
+                    </div>
+                    <div class="analytics-item">
+                        <p class="analytics-label">Avg. Session Duration</p>
+                        <p class="analytics-value">N/A</p>
+                    </div>
+                    <div class="analytics-item">
+                        <p class="analytics-label">Bounce Rate</p>
+                        <p class="analytics-value">N/A</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="dashboard-section" id="settings-section">
+            <div class="glass-card">
+                <h3 class="card-title">Background Video</h3>
+                <p class="card-description">Set a YouTube video as background for the hero section</p>
+
+                <form id="video-form" class="settings-form">
+                    <div class="form-group">
+                        <label class="form-label">YouTube URL</label>
+                        <input
+                            type="text"
+                            id="video-url"
+                            class="form-input"
+                            placeholder="https://www.youtube.com/watch?v=..."
+                        >
+                        <p class="form-help">Leave empty to remove background video</p>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <span>Save Changes</span>
+                    </button>
+
+                    <div class="form-message" id="video-message"></div>
+                </form>
+            </div>
+
+            <div class="glass-card">
+                <h3 class="card-title">Account</h3>
+                <p class="card-description">Manage your admin account</p>
+
+                <div class="account-info">
+                    <div class="info-item">
+                        <p class="info-label">Username</p>
+                        <p class="info-value">[your admin email]</p>
+                    </div>
+                    <div class="info-item">
+                        <p class="info-label">Role</p>
+                        <p class="info-value">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js?v=20261012-auth"></script>
+    <script src="dashboard.js?v=20261012-auth"></script>
+</body>
+</html>
