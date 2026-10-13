@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin-styles.css?v=20261013-tools">
+    <link rel="stylesheet" href="admin-styles.css?v=20261013-profile">
 </head>
 <body class="dashboard-body">
     <!-- Authentication is verified after Supabase loads in dashboard.js. -->
@@ -51,6 +51,7 @@
             </a>
 
             <a href="#" class="nav-item" data-section="messages"><span>Messages</span></a>
+            <a href="#" class="nav-item" data-section="profile"><span>Profile editor</span></a>
             <a href="#" class="nav-item" data-section="settings">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="3"/>
@@ -194,7 +195,7 @@
         <!-- Analytics Section -->
         <div class="dashboard-section" id="analytics-section">
             <div class="glass-card">
-                <h3 class="card-title">Visitor Analytics</h3>
+                <h3 class="card-title">Visits over time</h3><div class="admin-tools"><label>Range<select class="form-input" id="chart-range"><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></label></div><p class="card-description" id="chart-summary" role="status">Loading chart...</p><div id="visits-chart" class="visits-chart" aria-label="Daily visits chart"></div><details><summary>View daily counts</summary><div id="chart-table"></div></details><h3 class="card-title" style="margin-top:24px">Visitor Analytics</h3>
                 <p class="card-description">Detailed analytics and insights about your visitors</p>
 
                 <div class="analytics-grid">
@@ -219,7 +220,8 @@
         </div>
 
         <div class="dashboard-section" id="messages-section"><div class="glass-card"><h3 class="card-title">Contact inbox</h3><p class="card-description">Messages sent through your portfolio. Only admins can read these.</p><div id="contact-inbox" aria-live="polite">Loading messages...</div></div></div>
-        <!-- Settings Section -->
+        <div class="dashboard-section" id="profile-section"><div class="glass-card"><h3 class="card-title">Public profile editor</h3><p class="card-description">These fields appear publicly on your portfolio. Leave optional social links empty to hide them.</p><form id="profile-form" class="settings-form"><div class="form-group"><label for="profile-bio" class="form-label">Bio</label><textarea id="profile-bio" class="form-input" rows="5" maxlength="2000"></textarea></div><div class="form-group"><label for="profile-semester" class="form-label">Semester</label><input id="profile-semester" class="form-input" maxlength="80" type="text"></div><div class="form-group"><label for="profile-skills" class="form-label">Skills (separate with commas)</label><input id="profile-skills" class="form-input" maxlength="1000" type="text"></div><div class="form-group"><label for="profile-github" class="form-label">GitHub URL</label><input id="profile-github" class="form-input" maxlength="300" type="url"></div><div class="form-group"><label for="profile-linkedin" class="form-label">LinkedIn URL</label><input id="profile-linkedin" class="form-input" maxlength="300" type="url"></div><div class="form-group"><label for="profile-email" class="form-label">Public contact email</label><input id="profile-email" class="form-input" maxlength="254" type="email"></div><button class="btn-primary" type="submit">Save public profile</button><p id="profile-status" role="status" class="card-description"></p></form></div></div>
+<!-- Settings Section -->
         <div class="dashboard-section" id="settings-section">
             <div class="glass-card">
                 <h3 class="card-title">Quick tools</h3>
@@ -272,6 +274,7 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js?v=20261013-location"></script>
-    <script src="dashboard.js?v=20261013-location"></script>
+    <script src="dashboard.js?v=20261013-profile"></script>
+<script src="profile-tools.js?v=20261013-profile"></script>
 </body>
 </html>

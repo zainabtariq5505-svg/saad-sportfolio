@@ -580,3 +580,8 @@
 .admin-tools label { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 180px; color: #a0a0b8; font-size: 13px; }
 .admin-tools .btn-primary { text-decoration: none; min-height: 44px; }
 .admin-tools select option { color: #fff; background: #181820; }
+
+.visits-chart { width: 100%; min-height: 180px; margin: 20px 0; }
+.visits-chart svg { display: block; width: 100%; height: auto; }
+#profile-form textarea { resize: vertical; min-height: 140px; }
+#profile-status { margin-top: 16px; }

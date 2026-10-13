@@ -19,6 +19,8 @@ navItems.forEach(item => {
 
         const section = item.dataset.section;
         if (section === 'messages') loadContactInbox();
+        if (section === 'profile') window.loadProfileEditor?.();
+        if (section === 'analytics') window.loadVisitChart?.();
 
         // Update active nav
         navItems.forEach(nav => nav.classList.remove('active'));
@@ -34,7 +36,7 @@ navItems.forEach(item => {
             visitors: 'All Visitors',
             analytics: 'Analytics',
             settings: 'Settings',
-            messages: 'Contact inbox'
+            messages: 'Contact inbox', profile: 'Profile editor'
         };
         sectionTitle.textContent = titles[section] || 'Dashboard';
     });
