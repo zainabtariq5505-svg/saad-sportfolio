@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (command === 'whoami') {
             print('Syed Muhammad Saad — CS student, software developer, and curious builder.');
         } else if (command === 'skills') {
-            print('JavaScript · Python · C++ · SQL\nHTML · CSS · React · Git');
+            print([...document.querySelectorAll('.tech-stack .tech-tag')].map(tag => tag.textContent).join(' · ') || 'Skills will be added soon.');
         } else if (command === 'video') {
             close();
             document.getElementById('theme-switcher').click();

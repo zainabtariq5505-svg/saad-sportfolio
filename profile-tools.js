@@ -43,7 +43,7 @@
             if (request !== chartRequest) return;
             if (error) throw error;
             const counts = data.map(row => Number(row.visits));
-            const max = Math.max(1, ...counts);
+            const max = Math.max(4, Math.ceil(Math.max(0, ...counts) / 4) * 4);
             const total = counts.reduce((a,b)=>a+b,0);
             summary.textContent = `${total} visits in the last ${days} days · ${timezone} · daily visit counts, not unique people`;
             chart.replaceChildren();
