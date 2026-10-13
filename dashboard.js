@@ -200,16 +200,31 @@ async function displayTopCountries() {
 // LOAD VISITORS TABLE
 // ============================================
 
+function filteredVisitors() {
+    const query = (document.getElementById('visitor-search')?.value || '').trim().toLowerCase();
+    const range = document.getElementById('visitor-range')?.value || 'all';
+    const cutoff = new Date();
+    if (range === 'today') cutoff.setHours(0, 0, 0, 0);
+    else if (range !== 'all') cutoff.setTime(Date.now() - Number(range) * 86400000);
+    return (analyticsData?.visitors || []).filter(visitor => {
+        if (range !== 'all' && new Date(visitor.timestamp) < cutoff) return false;
+        return !query || [visitor.city, visitor.country, visitor.ip_address, visitor.user_agent ? getBrowser(visitor.user_agent) : 'Not collected'].join(' ').toLowerCase().includes(query);
+    });
+}
+
 function loadVisitorsTable() {
     const tbody = document.getElementById('all-visitors-table');
     if (!tbody) return;
 
-    if (!analyticsData?.visitors || analyticsData.visitors.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="loading-state">No visitors yet</td></tr>';
+    const visitors = filteredVisitors();
+    const count = document.getElementById('visitor-result-count');
+    if (count) count.textContent = `${visitors.length} of ${analyticsData?.visitors?.length || 0} visits shown`;
+    if (!visitors.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="loading-state">No visits match this filter.</td></tr>';
         return;
     }
 
-    tbody.innerHTML = analyticsData.visitors.map(visitor => `
+    tbody.innerHTML = visitors.map(visitor => `
         <tr>
             <td>${formatDate(visitor.timestamp)}</td>
             <td>${visitorLocation(visitor)}</td>
@@ -334,7 +349,8 @@ function formatDate(dateString) {
 }
 
 function getBrowser(userAgent) {
-    if (!userAgent) return 'Unknown';
+    if (!userAgent) return 'Not collected';
+    if (['Chrome', 'Edge', 'Firefox', 'Safari', 'Opera', 'Other'].includes(userAgent)) return userAgent;
 
     if (userAgent.includes('Firefox')) return 'Firefox';
     if (userAgent.includes('Edg')) return 'Edge';
@@ -442,3 +458,39 @@ async function loadContactInbox() {
         inbox.append(card);
     }
 }
+
+document.getElementById('visitor-search')?.addEventListener('input', loadVisitorsTable);
+document.getElementById('visitor-range')?.addEventListener('change', loadVisitorsTable);
+document.getElementById('refresh-visitors')?.addEventListener('click', async event => {
+    const button = event.currentTarget;
+    button.disabled = true;
+    button.textContent = 'Refreshing...';
+    try { await loadDashboard(); }
+    finally { button.disabled = false; button.textContent = 'Refresh data'; }
+});
+document.getElementById('export-visitors')?.addEventListener('click', () => {
+    const cell = value => {
+        let text = String(value ?? 'Not collected');
+        if (/^[\s]*[=+@-]/.test(text)) text = "'" + text;
+        return '"' + text.replace(/"/g, '""') + '"';
+    };
+    const rows = [['Time', 'City', 'Country', 'Browser', 'IP'], ...filteredVisitors().map(v => [v.timestamp, v.city, v.country, v.user_agent ? getBrowser(v.user_agent) : null, v.ip_address])];
+    const url = URL.createObjectURL(new Blob(['\uFEFF' + rows.map(row => row.map(cell).join(',')).join('\r\n')], {type: 'text/csv;charset=utf-8'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'portfolio-visits-' + new Date().toISOString().slice(0,10) + '.csv';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+document.getElementById('preview-video')?.addEventListener('click', () => {
+    const id = extractYouTubeID(document.getElementById('video-url').value.trim());
+    const status = document.getElementById('video-preview-status');
+    status.replaceChildren();
+    if (!id || !/^[\w-]{11}$/.test(id)) { status.textContent = 'Enter a valid YouTube video URL first.'; return; }
+    const link = document.createElement('a');
+    link.href = 'https://www.youtube.com/watch?v=' + id;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Open video preview on YouTube →';
+    status.append(link);
+});

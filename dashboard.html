@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="admin-styles.css?v=20261013-tools">
 </head>
 <body class="dashboard-body">
     <!-- Authentication is verified after Supabase loads in dashboard.js. -->
@@ -163,6 +163,14 @@
         <div class="dashboard-section" id="visitors-section">
             <div class="glass-card">
                 <h3 class="card-title">All Visitors</h3>
+                <p class="card-description">New visits contain browser type and visit time only. Older location records are retained; missing details cannot be recovered.</p>
+                <div class="admin-tools">
+                    <label>Search visitors<input id="visitor-search" class="form-input" type="search" placeholder="Search location, browser, or IP"></label>
+                    <label>Date range<select id="visitor-range" class="form-input"><option value="all">All time</option><option value="today">Today</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></label>
+                    <button class="btn-primary" id="refresh-visitors" type="button">Refresh data</button>
+                    <button class="btn-primary" id="export-visitors" type="button">Export filtered CSV</button>
+                </div>
+                <p id="visitor-result-count" class="card-description" role="status"></p>
                 <div class="table-container">
                     <table class="visitors-table">
                         <thead>
@@ -214,6 +222,12 @@
         <!-- Settings Section -->
         <div class="dashboard-section" id="settings-section">
             <div class="glass-card">
+                <h3 class="card-title">Quick tools</h3>
+                <p class="card-description">Open the live portfolio or check your saved video.</p>
+                <div class="admin-tools"><a class="btn-primary" href="https://saad-sportfolio.vercel.app/" target="_blank" rel="noopener noreferrer">Open live website</a><button class="btn-primary" id="preview-video" type="button">Preview video link</button></div>
+                <p id="video-preview-status" class="card-description" role="status"></p>
+            </div>
+            <div class="glass-card">
                 <h3 class="card-title">Background Video</h3>
                 <p class="card-description">Set a YouTube video as background for the hero section</p>
 
@@ -257,7 +271,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js?v=20261013-visitor-labels"></script>
-    <script src="dashboard.js?v=20261013-visitor-labels"></script>
+    <script src="supabase-config.js?v=20261013-browser"></script>
+    <script src="dashboard.js?v=20261013-tools"></script>
 </body>
 </html>
