@@ -163,7 +163,7 @@
         <div class="dashboard-section" id="visitors-section">
             <div class="glass-card">
                 <h3 class="card-title">All Visitors</h3>
-                <p class="card-description">New visits contain browser type and visit time only. Older location records are retained; missing details cannot be recovered.</p>
+                <p class="card-description">New visits include browser, IP address, and approximate city/country where available. Earlier anonymous visits cannot be filled in.</p>
                 <div class="admin-tools">
                     <label>Search visitors<input id="visitor-search" class="form-input" type="search" placeholder="Search location, browser, or IP"></label>
                     <label>Date range<select id="visitor-range" class="form-input"><option value="all">All time</option><option value="today">Today</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></label>
@@ -271,7 +271,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js?v=20261013-browser"></script>
-    <script src="dashboard.js?v=20261013-tools"></script>
+    <script src="supabase-config.js?v=20261013-location"></script>
+    <script src="dashboard.js?v=20261013-location"></script>
 </body>
 </html>

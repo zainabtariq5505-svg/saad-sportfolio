@@ -132,7 +132,7 @@ function escapeVisitorText(value) {
 }
 
 function visitorLocation(visitor) {
-    const isKnown = value => typeof value === 'string' && value.trim() && !['unknown', 'not collected', 'n/a'].includes(value.trim().toLowerCase());
+    const isKnown = value => typeof value === 'string' && value.trim() && !['unknown', 'not collected', 'n/a', 'location unavailable'].includes(value.trim().toLowerCase());
     const location = [visitor.city, visitor.country].filter(isKnown).map(value => value.trim());
     if (location.length) return escapeVisitorText(location.join(', '));
     return visitor.country === 'Not collected' ? 'Anonymous visit · location not collected' : 'Location unavailable';

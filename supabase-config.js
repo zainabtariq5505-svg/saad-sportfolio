@@ -35,10 +35,8 @@ async function trackVisitor() {
         const key = 'portfolioVisitRecordedAt';
         const previous = Number(sessionStorage.getItem(key));
         if (previous && Date.now() - previous < 30 * 60 * 1000) return;
-        const agent = navigator.userAgent;
-        const browser = /Edg\//.test(agent) ? 'Edge' : /OPR\//.test(agent) ? 'Opera' : /Firefox\//.test(agent) ? 'Firefox' : /Chrome\//.test(agent) ? 'Chrome' : /Safari\//.test(agent) ? 'Safari' : 'Other';
-        const { error } = await supabase.rpc('record_portfolio_visit', { p_browser: browser });
-        if (error) throw error;
+        const response = await fetch('/api/visit', { method: 'POST' });
+        if (!response.ok) throw new Error('Visit recording unavailable');
         sessionStorage.setItem(key, String(Date.now()));
     } catch (error) {
         console.warn('Visit count unavailable:', error.message);
@@ -261,7 +259,7 @@ async function getVisitorsByCountry() {
         const countryCount = {};
         data.forEach(visitor => {
             const country = visitor.country || 'Unknown';
-            if (['unknown', 'not collected', 'n/a'].includes(country.trim().toLowerCase())) return;
+            if (['unknown', 'not collected', 'n/a', 'location unavailable'].includes(country.trim().toLowerCase())) return;
             countryCount[country] = (countryCount[country] || 0) + 1;
         });
 
