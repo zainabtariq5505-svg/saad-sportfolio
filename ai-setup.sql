@@ -19,7 +19,7 @@ BEGIN
       per_minute=CASE WHEN minute=date_trunc('minute',now()) THEN per_minute ELSE 0 END,
       day=current_date,minute=date_trunc('minute',now()) WHERE bucket=b;
     SELECT * INTO q FROM public.ai_quota WHERE bucket=b;
-    IF q.daily >= CASE WHEN b='global' THEN 150 ELSE 10 END OR q.per_minute >= CASE WHEN b='global' THEN 15 ELSE 3 END THEN RETURN false; END IF;
+    IF q.daily >= (CASE WHEN b='global' THEN 150 ELSE 10 END) OR q.per_minute >= (CASE WHEN b='global' THEN 15 ELSE 3 END) THEN RETURN false; END IF;
   END LOOP;
   UPDATE public.ai_quota SET daily=daily+1,per_minute=per_minute+1 WHERE bucket IN ('global',p_bucket);
   RETURN true;
