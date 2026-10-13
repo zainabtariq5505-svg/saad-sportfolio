@@ -3,7 +3,7 @@
         bio: "I'm a Computer Science student with a deep passion for software development and problem-solving. My journey in tech is driven by curiosity and the desire to create meaningful digital experiences.",
         semester: '1st Semester',
         skills: 'JavaScript, Python, C++, SQL, HTML5, CSS3, React, Responsive Design, Git, GitHub, VS Code, Database Design',
-        github: '', linkedin: '', email: ''
+        github: '', linkedin: '', email: '', aiKnowledge: ''
     };
     const fields = Object.keys(defaults);
     const validLink = (value, host) => {
