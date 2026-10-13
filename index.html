@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syed Muhammad Saad | Software Engineer</title>
-    <link rel="stylesheet" href="styles.css?v=20261012-sections">
+    <link rel="stylesheet" href="styles.css?v=20261013-cinema">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,6 +19,13 @@
             <span class="entry-prompt">Click me to enter</span>
             <span class="entry-hint">Welcome to my world</span>
         </button>
+        <div class="cinematic-boot" id="cinematic-boot" hidden>
+            <p class="boot-eyebrow">SMS / PERSONAL UNIVERSE</p>
+            <h2>Initializing Saad’s world<span class="boot-dots">...</span></h2>
+            <p id="boot-status" role="status">Setting the scene</p>
+            <div class="boot-progress" aria-hidden="true"><span></span></div>
+            <button id="skip-intro" type="button">Skip intro →</button>
+        </div>
     </div>
     <!-- Gradient Background -->
     <div class="gradient-bg"></div>
@@ -27,10 +34,10 @@
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <div class="nav-logo">
+            <button class="nav-logo secret-logo" type="button" aria-label="SMS — discover a secret">
                 <span class="logo-text">SMS</span>
                 <span class="logo-dot"></span>
-            </div>
+            </button>
 
             <div class="nav-menu-toggle" id="nav-toggle">
                 <span></span>
@@ -513,7 +520,17 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js?v=20261013-visits"></script>
-    <script src="script.js?v=20261012-inbox"></script>
+    <button class="terminal-launcher" id="terminal-launcher" type="button" aria-haspopup="dialog">&gt;_ Explore with commands</button>
+    <dialog class="portfolio-terminal" id="portfolio-terminal" aria-labelledby="terminal-title">
+        <div class="terminal-top"><span id="terminal-title">saad@portfolio ~</span><button id="terminal-close" type="button" aria-label="Close terminal">×</button></div>
+        <div class="terminal-output" id="terminal-output" role="log" aria-live="polite"><p>Welcome to my corner of the internet.</p><p>Type help to see what you can explore.</p></div>
+        <form id="terminal-form" autocomplete="off"><label for="terminal-command">guest@saad:~$</label><input id="terminal-command" name="command" placeholder="Type help" maxlength="100" spellcheck="false" autocapitalize="off"><button type="submit">Run</button></form>
+        <div class="terminal-shortcuts"><button type="button" data-command="about">about</button><button type="button" data-command="projects">projects</button><button type="button" data-command="contact">contact</button><button type="button" data-command="help">help</button></div>
+    </dialog>
+    <div class="secret-toast" id="secret-toast" role="status" hidden></div>
+    <script src="effects.js?v=20261013-cinema"></script>
+    <script src="script.js?v=20261013-cinema"></script>
 </body>
 </html>
+
 

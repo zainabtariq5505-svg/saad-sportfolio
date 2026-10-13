@@ -1028,6 +1028,7 @@ document.addEventListener('DOMContentLoaded', () => {
     portfolioElements.forEach(el => { el.inert = true; });
     entryButton?.focus();
     entryButton?.addEventListener('click', async () => {
+        if (typeof window.runCinematicIntro === 'function') await window.runCinematicIntro();
         document.body.classList.remove('entry-locked');
         portfolioElements.forEach(el => { el.inert = false; });
         entryScreen.classList.add('entered');

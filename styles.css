@@ -1511,3 +1511,35 @@ body.video-mode .hero-video-background { animation: video-reveal 1.2s ease both;
     .typing-caret { animation: none; }
     body.video-mode .hero-video-background { animation: none; }
 }
+
+/* Cinematic entrance, command palette, and a calm secret visual mode. */
+.entry-button[hidden], .cinematic-boot[hidden], .secret-toast[hidden] { display: none; }
+.cinematic-boot { width: min(540px, 88vw); text-align: center; padding: 28px; }
+.boot-eyebrow { color: #a78bfa; font: 12px 'JetBrains Mono', monospace; letter-spacing: 3px; margin-bottom: 24px; }
+.cinematic-boot h2 { font-size: clamp(24px, 5vw, 38px); letter-spacing: -1px; }
+#boot-status { color: #a0a0b8; margin: 20px 0; }
+.boot-progress { height: 2px; background: #252033; overflow: hidden; margin: 32px 0; }
+.boot-progress span { display: block; height: 100%; background: linear-gradient(90deg, #6366f1, #d946ef); animation: boot-fill 1.75s ease forwards; transform-origin: left; }
+@keyframes boot-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+#skip-intro { background: transparent; color: #c4b5fd; border: 1px solid #403456; border-radius: 99px; padding: 10px 18px; cursor: pointer; }
+.secret-logo { background: transparent; border: 0; font: inherit; cursor: pointer; padding: 0; }
+.secret-logo:focus-visible, .terminal-launcher:focus-visible { outline: 2px solid #a78bfa; outline-offset: 6px; }
+.terminal-launcher { position: fixed; top: 100px; right: 24px; z-index: 90; padding: 10px 16px; border-radius: 99px; border: 1px solid #514365; background: rgba(13, 10, 21, .9); color: #c4b5fd; font: 12px 'JetBrains Mono', monospace; cursor: pointer; backdrop-filter: blur(12px); }
+.portfolio-terminal { position: fixed; margin: auto; width: min(640px, calc(100vw - 32px)); max-height: 80dvh; padding: 0; color: #e4e1ef; background: #101019; border: 1px solid #58446c; border-radius: 16px; box-shadow: 0 30px 120px #0009; font: 14px 'JetBrains Mono', monospace; }
+.portfolio-terminal::backdrop { background: #080611c9; backdrop-filter: blur(8px); }
+.terminal-top { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #30283f; color: #a78bfa; }
+.terminal-top button { color: #ddd; border: 0; background: transparent; font-size: 28px; cursor: pointer; }
+.terminal-output { padding: 20px; max-height: 40dvh; min-height: 150px; overflow-y: auto; }
+.terminal-output p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; margin-bottom: 12px; }
+#terminal-form { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 16px 20px; border-top: 1px solid #30283f; }
+#terminal-form label { color: #a78bfa; font-size: 12px; }
+#terminal-command { flex: 1; min-width: 100px; width: 100%; color: #fff; background: transparent; border: 0; outline-color: #a78bfa; padding: 8px; font: inherit; }
+#terminal-form button, .terminal-shortcuts button { border: 1px solid #403456; background: #20182d; color: #c4b5fd; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+.terminal-shortcuts { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 20px; }
+.secret-toast { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); z-index: 200; max-width: 90vw; padding: 16px 22px; background: #071b22; border: 1px solid #22d3ee; color: #a5f3fc; border-radius: 12px; font: 12px 'JetBrains Mono', monospace; }
+body.secret-mode { --color-accent: #22d3ee; --gradient-primary: linear-gradient(135deg, #22d3ee, #a78bfa, #f472b6); }
+body.secret-mode .gradient-text { text-shadow: 2px 0 #22d3ee55, -2px 0 #f472b655; }
+body.secret-mode .glass-card, body.secret-mode .project-card { border-color: #22d3ee55; box-shadow: 0 0 30px #22d3ee0a; }
+body.secret-mode .nav-logo { filter: drop-shadow(2px 0 #22d3ee); }
+@media (max-width: 600px) { .terminal-launcher { top: 90px; right: 12px; font-size: 10px; padding: 8px 12px; } }
+@media (prefers-reduced-motion: reduce) { .boot-progress span { animation: none; } }
