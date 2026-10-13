@@ -259,6 +259,7 @@ async function getVisitorsByCountry() {
         const countryCount = {};
         data.forEach(visitor => {
             const country = visitor.country || 'Unknown';
+            if (['unknown', 'not collected', 'n/a'].includes(country.trim().toLowerCase())) return;
             countryCount[country] = (countryCount[country] || 0) + 1;
         });
 

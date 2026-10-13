@@ -115,7 +115,7 @@ async function updateOverviewStats() {
         if (topCountryEl && countries && countries.length > 0) {
             topCountryEl.textContent = countries[0].country;
         } else if (topCountryEl) {
-            topCountryEl.textContent = 'N/A';
+            topCountryEl.textContent = 'Location not collected';
         }
 
     } catch (error) {
@@ -126,6 +126,17 @@ async function updateOverviewStats() {
 // ============================================
 // DISPLAY RECENT VISITORS
 // ============================================
+
+function escapeVisitorText(value) {
+    return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+}
+
+function visitorLocation(visitor) {
+    const isKnown = value => typeof value === 'string' && value.trim() && !['unknown', 'not collected', 'n/a'].includes(value.trim().toLowerCase());
+    const location = [visitor.city, visitor.country].filter(isKnown).map(value => value.trim());
+    if (location.length) return escapeVisitorText(location.join(', '));
+    return visitor.country === 'Not collected' ? 'Anonymous visit · location not collected' : 'Location unavailable';
+}
 
 function displayRecentVisitors() {
     const container = document.getElementById('recent-visitors');
@@ -142,7 +153,7 @@ function displayRecentVisitors() {
         <div class="visitor-item">
             <div class="visitor-info">
                 <div class="visitor-location">
-                    ${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}
+                    ${visitorLocation(visitor)}
                 </div>
                 <div class="visitor-time">
                     ${formatDate(visitor.timestamp)}
@@ -164,7 +175,7 @@ async function displayTopCountries() {
         const countries = await getVisitorsByCountry();
 
         if (!countries || countries.length === 0) {
-            container.innerHTML = '<div class="loading-state">No data yet</div>';
+            container.innerHTML = '<div class="loading-state">Location is not collected for anonymous visits.</div>';
             return;
         }
 
@@ -173,7 +184,7 @@ async function displayTopCountries() {
         container.innerHTML = top5.map(item => `
             <div class="country-item">
                 <div class="country-info">
-                    <div class="country-name">${item.country}</div>
+                    <div class="country-name">${escapeVisitorText(item.country)}</div>
                     <div class="country-count">${item.count} visitors</div>
                 </div>
             </div>
@@ -201,9 +212,9 @@ function loadVisitorsTable() {
     tbody.innerHTML = analyticsData.visitors.map(visitor => `
         <tr>
             <td>${formatDate(visitor.timestamp)}</td>
-            <td>${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}</td>
-            <td>${getBrowser(visitor.user_agent)}</td>
-            <td>${visitor.ip_address || 'N/A'}</td>
+            <td>${visitorLocation(visitor)}</td>
+            <td>${visitor.user_agent ? getBrowser(visitor.user_agent) : 'Not collected'}</td>
+            <td>${visitor.ip_address ? escapeVisitorText(visitor.ip_address) : 'Not collected'}</td>
         </tr>
     `).join('');
 }
