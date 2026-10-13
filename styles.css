@@ -1543,3 +1543,9 @@ body.secret-mode .glass-card, body.secret-mode .project-card { border-color: #22
 body.secret-mode .nav-logo { filter: drop-shadow(2px 0 #22d3ee); }
 @media (max-width: 600px) { .terminal-launcher { top: 90px; right: 12px; font-size: 10px; padding: 8px 12px; } }
 @media (prefers-reduced-motion: reduce) { .boot-progress span { animation: none; } }
+
+.profile-contact-card { gap: 18px; text-decoration: none; min-width: 0; }
+.profile-contact-card .method-icon { flex-shrink: 0; }
+.contact-method-copy { min-width: 0; }
+.profile-contact-card p { overflow-wrap: anywhere; }
+.footer-social svg { display: block; width: 20px; height: 20px; }

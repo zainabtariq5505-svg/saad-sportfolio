@@ -112,8 +112,38 @@
             const methods=document.querySelector('.contact-methods');
             const footer=document.querySelector('.footer-social');
             const links=[['GitHub',validLink(profile.github,'github.com')],['LinkedIn',validLink(profile.linkedin,'linkedin.com')],['Email',profile.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email) ? 'mailto:'+profile.email : '']];
-            if(methods) {methods.replaceChildren();links.filter(([,url])=>url).forEach(([label,url])=>{const link=document.createElement('a');link.href=url;link.className='contact-method glass-card';link.textContent=label+' · '+(label==='Email'?profile.email:new URL(url).pathname);link.rel='noopener noreferrer';methods.append(link);});}
-            if(footer) {footer.replaceChildren();links.filter(([,url])=>url).forEach(([label,url])=>{const link=document.createElement('a');link.href=url;link.textContent=label;link.rel='noopener noreferrer';footer.append(link);});}
+            const icon = label => {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('viewBox', '0 0 24 24');
+                svg.setAttribute('width', '24'); svg.setAttribute('height', '24');
+                svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor');
+                svg.setAttribute('stroke-width', '1.8'); svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+                svg.setAttribute('aria-hidden', 'true');
+                const paths = {
+                    Email: ['M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z', 'm3 7 9 6 9-6'],
+                    GitHub: ['M9 19c-5 1.5-5-2.5-7-3', 'M15 22v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7a5.4 5.4 0 0 0-1.5-3.7 5 5 0 0 0-.1-3.7S17.7.7 15 2.5a13 13 0 0 0-7 0C5.3.7 4.1 1.1 4.1 1.1A5 5 0 0 0 4 4.8a5.4 5.4 0 0 0-1.5 3.7c0 5.5 3.3 6.7 6.4 7a3.4 3.4 0 0 0-.9 2.6V22'],
+                    LinkedIn: ['M3 9h4v12H3Z', 'M5 3h.01', 'M11 21V9h4v2a4 4 0 0 1 7 3v7h-4v-7a2 2 0 0 0-3 0v7']
+                };
+                paths[label].forEach(d => { const path=document.createElementNS(svg.namespaceURI,'path'); path.setAttribute('d',d);svg.append(path); });
+                return svg;
+            };
+            if(methods) {
+                methods.replaceChildren();
+                links.filter(([,url])=>url).forEach(([label,url])=>{
+                    const link=document.createElement('a');link.href=url;link.className='contact-method glass-card profile-contact-card';link.rel='noopener noreferrer';
+                    const badge=document.createElement('span');badge.className='method-icon';badge.append(icon(label));
+                    const copy=document.createElement('span');copy.className='contact-method-copy';
+                    const title=document.createElement('h4');title.textContent=label;
+                    const detail=document.createElement('p');detail.textContent=label==='Email'?profile.email:new URL(url).pathname.replace(/^\//,'');
+                    copy.append(title,detail);link.append(badge,copy);methods.append(link);
+                });
+            }
+            if(footer) {
+                footer.replaceChildren();
+                links.filter(([,url])=>url).forEach(([label,url])=>{
+                    const link=document.createElement('a');link.href=url;link.setAttribute('aria-label',label);link.title=label;link.rel='noopener noreferrer';link.append(icon(label));footer.append(link);
+                });
+            }
         } catch(error) {console.warn('Public profile unavailable; showing existing profile.');}
     });
 })();
