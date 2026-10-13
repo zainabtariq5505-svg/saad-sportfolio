@@ -19,6 +19,6 @@ WHERE id = 'REPLACE_WITH_ADMIN_USER_UUID'::uuid;
 
 Only the Supabase public/anon key is shipped to the browser. Never place a service-role key, database password, or admin password in website files or GitHub.
 
-Public visitor collection is disabled. Historical records remain available to the authorized admin after the SQL migration. Do not run older permissive policy snippets from historical guides.
+Run visitor-tracking.sql to enable anonymous timestamp-only visit counts through a bounded submission function. No IP addresses or precise locations are collected. Historical records remain available only to the authorized admin. Do not run older permissive policy snippets from historical guides.
 
 Reference: https://supabase.com/docs/guides/database/postgres/row-level-security

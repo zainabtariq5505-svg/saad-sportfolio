@@ -29,7 +29,18 @@ if (typeof window.supabaseClient === 'undefined') {
 // ============================================
 
 async function trackVisitor() {
-    // Public visitor collection is disabled for this deployment.
+    // Count at most one visit per browser tab in a 30-minute window.
+    // Tracking is optional: storage/network failures never stop the portfolio.
+    try {
+        const key = 'portfolioVisitRecordedAt';
+        const previous = Number(sessionStorage.getItem(key));
+        if (previous && Date.now() - previous < 30 * 60 * 1000) return;
+        const { error } = await supabase.rpc('record_portfolio_visit');
+        if (error) throw error;
+        sessionStorage.setItem(key, String(Date.now()));
+    } catch (error) {
+        console.warn('Visit count unavailable:', error.message);
+    }
 }
 
 // ============================================

@@ -214,22 +214,9 @@ function loadVisitorsTable() {
 
 async function updateAnalytics() {
     try {
-        const uniqueEl = document.getElementById('unique-visitors');
-        if (uniqueEl && analyticsData?.visitors) {
-            // Count unique IPs
-            const uniqueIPs = new Set(analyticsData.visitors.map(v => v.ip_address));
-            uniqueEl.textContent = uniqueIPs.size;
-        }
-
-        const returningEl = document.getElementById('returning-visitors');
-        if (returningEl && analyticsData?.visitors) {
-            // Count IPs that appear more than once
-            const ipCounts = {};
-            analyticsData.visitors.forEach(v => {
-                ipCounts[v.ip_address] = (ipCounts[v.ip_address] || 0) + 1;
-            });
-            const returning = Object.values(ipCounts).filter(count => count > 1).length;
-            returningEl.textContent = returning;
+        for (const id of ['unique-visitors', 'returning-visitors']) {
+            const element = document.getElementById(id);
+            if (element) { element.textContent = 'Not collected'; element.title = 'Anonymous visit counts do not identify individual visitors.'; }
         }
 
     } catch (error) {
