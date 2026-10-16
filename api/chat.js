@@ -11,6 +11,12 @@ module.exports = async (req,res) => {
     try {if(typeof body==='string') body=JSON.parse(body);} catch {return res.status(400).json({error:'Invalid request.'});}
     const messages=body?.messages;
     if(!Array.isArray(messages)||messages.length<1||messages.length>10||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>1000)||messages.at(-1).role!=='user') return res.status(400).json({error:'Keep your question under 1,000 characters.'});
+    // The built-in Projects suggestion has a verified answer and needs no model quota.
+    if(messages.at(-1).content.trim().toLowerCase()==='tell me about this portfolio project.') {
+        const reply=`${portfolioKnowledge.name} is a live personal portfolio introducing Saad and his first-semester CS learning journey. It uses HTML, CSS, and vanilla JavaScript, with Supabase for authentication and data, Vercel for hosting, and Groq for Saad AI.\n\nIt includes a cinematic entrance, video background, interactive terminal, contact inbox, an editable public profile, visit charts, and streaming AI chat with a Stop button.\n\nThe Student Management System card is a separate, unverified project; this portfolio itself is the live project.\n\nSource: ${portfolioKnowledge.source}`;
+        res.setHeader('Content-Type','application/x-ndjson; charset=utf-8');
+        return res.status(200).end(JSON.stringify({delta:reply})+'\n'+JSON.stringify({done:true,source:'verified'})+'\n');
+    }
     const cancellation=new AbortController();
     res.on?.('close',()=>{if(!res.writableEnded)cancellation.abort();});
     req.on?.('aborted',()=>cancellation.abort());

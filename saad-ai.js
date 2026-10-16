@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(busy||!question.trim())return;
         busy=true;controller=new AbortController();
         const request=[...messages.slice(-8),{role:'user',content:question}];
-        let answer='',bubble=null,frame=null,complete=false;
+        let answer='',bubble=null,frame=null,complete=false,verified=false;
         const flush=()=>{
             frame=null;
             if(!bubble)return;
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(!line.trim())return;
                 const data=JSON.parse(line);
                 if(data.error)throw new Error(data.error);
-                if(data.done)complete=true;
+                if(data.done){complete=true;verified=data.source==='verified';}
                 if(typeof data.delta==='string'){
                     if(!bubble){thinking.hidden=true;bubble=add('');}
                     answer+=data.delta;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(controller.signal.aborted)throw new DOMException('Stopped','AbortError');
             if(!complete||!answer)throw new Error('Response interrupted. Please try again.');
             messages=[...request,{role:'assistant',content:answer.slice(0,1000)}];
-            status.textContent='Response complete.';
+            status.textContent=verified?'Verified portfolio facts.':'Response complete.';
         }catch(error){
             if(controller.signal.aborted){
                 status.textContent=answer?'Stopped. Partial reply kept.':'Stopped.';
