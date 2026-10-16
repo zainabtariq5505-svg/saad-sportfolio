@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syed Muhammad Saad | Software Engineer</title>
-    <link rel="stylesheet" href="styles.css?v=20261013-ai">
+    <link rel="stylesheet" href="styles.css?v=20261016-controls">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -456,38 +456,6 @@
         <span class="theme-label">Video Mode</span>
     </button>
 
-    <!-- Audio Player -->
-    <div class="audio-player" id="audio-player">
-        <button class="audio-toggle" id="audio-toggle" aria-label="Toggle music">
-            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M5 3l14 9-14 9V3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <svg class="pause-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M6 4h4v16H6zM14 4h4v16h-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-
-        <div class="volume-control">
-            <button class="volume-toggle" id="volume-toggle" aria-label="Toggle mute">
-                <svg class="volume-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M11 5 6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="mute-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M11 5 6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="50">
-        </div>
-
-        <button class="voice-control" id="voice-control" aria-label="Voice control">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" stroke="currentColor" stroke-width="2"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-    </div>
-
     <!-- Video Background Controls (Hidden by default) -->
     <div class="video-controls" id="video-controls" style="display: none;">
         <button class="video-control-btn" id="video-toggle" aria-label="Toggle video">
@@ -513,11 +481,6 @@
         </div>
     </div>
 
-    <!-- Hidden Audio Element -->
-    <audio id="background-music" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-creativeminds.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js?v=20261013-location"></script>
@@ -530,9 +493,9 @@
     </dialog>
     <div class="secret-toast" id="secret-toast" role="status" hidden></div>
     <script src="effects.js?v=20261013-cinema"></script>
-    <script src="script.js?v=20261013-cinema"></script>
+    <script src="script.js?v=20261016-controls"></script>
 <script src="profile-tools.js?v=20261013-ai"></script>
-<script src="saad-ai.js?v=20261013-ai"></script>
+<script src="saad-ai.js?v=20261016-brand"></script>
 </body>
 </html>
 

@@ -1579,3 +1579,6 @@ body.secret-mode .nav-logo { filter: drop-shadow(2px 0 #22d3ee); }
 .video-controls { bottom:170px; }
 @media(max-width:600px) { .ai-panel { inset:12px;margin:0;width:auto;height:calc(100dvh - 24px);border-radius:20px; } .ai-launcher { right:16px;bottom:18px; } }
 @media(prefers-reduced-motion:reduce) { .ai-panel[open],.ai-thinking .ai-brand svg { animation:none; } .ai-launcher { transition:none; } }
+
+/* One media bar: video controls sit above the AI launcher. */
+.video-controls { bottom: 100px; }

@@ -1043,7 +1043,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize all modules
     new Navigation();
     new ScrollAnimations();
-    const audioPlayer = new AudioPlayer();
+    const audioPlayer = null;
     new ContactForm();
     new ParallaxEffects();
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1070,8 +1070,7 @@ document.addEventListener('keydown', (e) => {
     // Space to play/pause (when not in input)
     if (e.code === 'Space' && document.body.classList.contains('video-mode') && !document.body.classList.contains('entry-locked') && !e.target.matches('input, textarea, button, a')) {
         e.preventDefault();
-        const audioPlayer = document.getElementById('audio-toggle');
-        audioPlayer?.click();
+        document.getElementById('video-toggle')?.click();
     }
 });
 
