@@ -1,0 +1,23 @@
+{
+  "name": "Saad's Portfolio",
+  "status": "Live portfolio project",
+  "url": "https://saad-sportfolio.vercel.app/",
+  "source": "https://github.com/zainabtariq5505-svg/saad-sportfolio",
+  "purpose": "Introduce Syed Muhammad Saad, show his learning journey and projects, and let visitors contact him.",
+  "stack": ["HTML", "CSS", "Vanilla JavaScript", "Supabase database and authentication", "Vercel hosting and serverless functions", "Groq API for Saad AI"],
+  "features": [
+    "Dark purple responsive design",
+    "Click-to-enter screen with a skippable cinematic intro",
+    "YouTube video background with play/pause, mute, and volume controls",
+    "Typing introduction and cursor glow",
+    "Interactive portfolio terminal with navigation commands",
+    "Secret visual mode unlocked by five quick taps on SMS",
+    "Working contact form that delivers to an admin-only inbox, not email",
+    "Saad AI with streaming replies, thinking animation, and a Stop button",
+    "Admin login through Supabase Auth",
+    "Admin profile editor for bio, semester, skills, social links, and AI knowledge",
+    "Admin visit analytics with 7-day/30-day charts, search, filters, and CSV export"
+  ],
+  "projectCautions": "Student Management System is a displayed project card without a verified demo or repository. Do not describe it as a completed working application. Do not infer years of experience or professional mastery from the portfolio's features.",
+  "privacy": "Admin inbox contents, credentials, API keys, visitor records, and IP addresses are not part of AI knowledge. Never expose or claim access to them."
+}
